@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SearchBar from './Components/SearchBar';
+import MovieDetail from './Components/MovieDetail';
+import MovieGrid from './Components/MovieGrid';
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/Store';
+import { Route, Switch } from 'react-router-dom';
+
+const store = ConfigureStore();
+
+const Home = () => {
+  return (
+    <div>
+      <SearchBar />
+      <MovieGrid />
+    </div>
+  );
+};
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={store}>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/:id" component={MovieDetail} />
+        </Switch>
+      </Provider>
     );
   }
 }
